@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,9 +33,10 @@ public class addTrip extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        System.out.println("******************************");
-        System.out.println(Train.getAllTrains().size());
-        System.out.println("******************************");
+        HttpSession session = request.getSession(true);
+        session.setAttribute("trains", Train.getAllTrains());
+        
+        response.sendRedirect("new_trip.jsp");
         
     }
 

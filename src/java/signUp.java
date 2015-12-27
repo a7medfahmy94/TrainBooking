@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import BusinessModels.User;
 import BusinessModels.DBConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
