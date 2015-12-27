@@ -9,5 +9,6 @@
  * @author hala
  */
 public class Train {
-    
+    public String name;
+    public int capacity;
 }

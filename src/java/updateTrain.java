@@ -42,7 +42,6 @@ public class updateTrain extends HttpServlet {
         train.capacity = Integer.valueOf(request.getParameter("newCapacity"));
 
         HttpSession session = request.getSession(true);
-        User u = (User)session.getAttribute("user");
         Connection con = new DBConnection().getConnection();
         Statement stmt;
         try {
