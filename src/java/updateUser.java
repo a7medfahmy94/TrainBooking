@@ -49,9 +49,16 @@ public class updateUser extends HttpServlet {
         Statement stmt;
         try {
             stmt = con.createStatement();
-            String update = "update user set name = '" +newUser.name+ "' and password='"+
-                    newUser.password+"' where email='" + newUser.email + "'";
-            stmt.executeUpdate(update);
+            String update = "";
+            if (newUser.name == null && newUser.password != null){
+                 update = "update user set password='"+newUser.password+"' where email='" + newUser.email + "'";  
+            }else if(newUser.name != null && newUser.password == null){
+                 update = "update user set name='"+newUser.name+"' where email='" + newUser.email + "'";
+            }else if(newUser.name != null && newUser.password != null){
+                 update = "update user set name = '" +newUser.name+ "' and password='"+
+                        newUser.password+"' where email='" + newUser.email + "'";
+             }
+        stmt.executeUpdate(update);
         } catch (SQLException ex) {
             Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
         }
