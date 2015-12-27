@@ -4,27 +4,21 @@
  * and open the template in the editor.
  */
 
-import BusinessModels.DBConnection;
+import BusinessModels.Train;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author fahmy
  */
-@WebServlet(urlPatterns = {"/signUp"})
-public class signUp extends HttpServlet {
+@WebServlet(urlPatterns = {"/addTrip"})
+public class addTrip extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,35 +31,11 @@ public class signUp extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // response.setContentType("text/html;charset=UTF-8");
-
-        User newUser = new User();
-        newUser.name = request.getParameter("userName");
-        newUser.email = request.getParameter("userEmail");
-        newUser.password = request.getParameter("userPassword");
-
-        Connection con = new DBConnection().getConnection();
-        Statement stmt;
-        try {
-            stmt = con.createStatement();
-            String insert = "insert into user (name, email, password, is_admin) VALUES('" +
-                  newUser.name+"','"+ newUser.email+"','"+newUser.password+"',false);";
-            stmt.executeUpdate(insert);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        HttpSession session = request.getSession(true);
-        if (!session.isNew()) {
-            session.invalidate();
-            session = request.getSession(true);
-        }
-        session.setAttribute("user", newUser);
-
-
-        response.sendRedirect("homepage.html");
-
+        
+        System.out.println("******************************");
+        System.out.println(Train.getAllTrains().size());
+        System.out.println("******************************");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,7 +51,6 @@ public class signUp extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
