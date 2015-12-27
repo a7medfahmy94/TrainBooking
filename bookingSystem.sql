@@ -5,7 +5,8 @@ USE bookingSystem;
 CREATE TABLE user (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(100) NOT NULL, 
-email VARCHAR(100) NOT NULL, 
+email VARCHAR(100) NOT NULL,
+password VARCHAR(100) NOT NULL,
 is_admin BOOL DEFAULT 0
 );
 
@@ -38,3 +39,4 @@ FOREIGN KEY (user_id) REFERENCES user(id),
 FOREIGN KEY (trip_id) REFERENCES trip(id)
 );
 
+insert into user (name, email, password, is_admin) VALUES('admin','admin','admin',true);
