@@ -55,13 +55,7 @@ public class signUp extends HttpServlet {
             Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        HttpSession session = request.getSession(true);
-        if (!session.isNew()) {
-            session.invalidate();
-            session = request.getSession(true);
-        }
-        session.setAttribute("user", newUser);
-
+        
 
         response.sendRedirect("homepage.html");
 
