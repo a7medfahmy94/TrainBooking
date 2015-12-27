@@ -6,11 +6,72 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Train booking</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bootstrap.min.css" />
+        <script type="text/javascript">
+          function validate(form) {
+            var user = {
+              email: form.userEmail.value,
+              password: form.userPassword.value,
+              passwordConfirmation: form.userPasswordConfirmation.value,
+              name: form.userName.value
+            }
+            if (!user.email) {
+              alert("User email is required!");
+              return false;
+            }
+            if (!user.name) {
+              alert("User name is required!");
+              return false;
+            }
+            if (!user.password) {
+              alert("User password is required");
+              return false;
+            }
+            if (user.password != user.passwordConfirmation){
+              alert("Password and Password confirmation don't match");
+              return false;
+            }
+            return true;
+          }
+        </script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <h1>Welcome to train booking system</h1>
+
+        <p> New user? or <a href="sign_in.html">Sign in</a></p>
+          <form action="signUp" onsubmit="return validate(this);">
+              <div class="row">
+                <div class="form-group col-sm-3">
+                  <label>Email: </label>
+                  <input class="form-control" type="text" name="userEmail"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-sm-3">
+                  <label>Password: </label>
+                  <input class="form-control" type="password" name="userPassword"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-sm-3">
+                  <label>Password again: </label>
+                  <input class="form-control" type="password" name="userPasswordConfirmation"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-sm-3">
+                  <label>Name: </label>
+                  <input class="form-control" type="text" name="userName"/>
+                </div>
+              </div>
+              <div class="row">
+                <div "form-group col-sm-3">
+                  <input type="submit" value="Sign up" class="btn"/>
+                </div>
+              </div>
+          </form>
     </body>
 </html>
