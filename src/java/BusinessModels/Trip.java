@@ -34,9 +34,6 @@ public class Trip {
                 " values('"+position+"','"+destination+"','"+note+"','"+datetime+"',"+price+"," +
                 train_id+");";
         
-        System.out.println("*****************");
-        System.out.println(q);
-        System.out.println("*****************");
         try {
             Statement stmt = con.createStatement();
             stmt.executeUpdate(q);
