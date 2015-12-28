@@ -70,4 +70,18 @@ public class User {
         }
         return null;
     }
+    
+    public void save() {
+        Connection con = new DBConnection().getConnection();
+        Statement stmt;
+        try {
+            stmt = con.createStatement();
+            String insert = "insert into user (name, email, password, is_admin) VALUES('" +
+                  name+"','"+ email+"','"+password+"',"+is_admin+");";
+            stmt.executeUpdate(insert);
+        } catch (SQLException ex) {
+            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
