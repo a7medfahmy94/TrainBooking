@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 
-import BusinessModels.User;
-import BusinessModels.DBConnection;
+import BusinessModels.Train;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -22,10 +21,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author fahmy
+ * @author hala
  */
-@WebServlet(urlPatterns = {"/signUp"})
-public class signUp extends HttpServlet {
+@WebServlet(urlPatterns = {"/updateTrain"})
+public class updateTrain extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,29 +37,12 @@ public class signUp extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        String name = request.getParameter("newName");
+        Integer capacity = Integer.valueOf(request.getParameter("newCapacity"));
+        Integer id = Integer.valueOf(request.getParameter("id"));
 
-        User newUser = new User();
-        newUser.name = request.getParameter("userName");
-        newUser.email = request.getParameter("userEmail");
-        newUser.password = request.getParameter("userPassword");
-
-        Connection con = new DBConnection().getConnection();
-        Statement stmt;
-        try {
-            stmt = con.createStatement();
-            String insert = "insert into user (name, email, password, is_admin) VALUES('" +
-                  newUser.name+"','"+ newUser.email+"','"+newUser.password+"',false);";
-            stmt.executeUpdate(insert);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        
-
-        response.sendRedirect("homepage.html");
-
+        Train.update(id,name,capacity);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -76,7 +58,6 @@ public class signUp extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**

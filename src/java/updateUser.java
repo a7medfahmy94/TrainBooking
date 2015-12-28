@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import BusinessModels.User;
 import BusinessModels.DBConnection;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,13 +19,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.jboss.weld.servlet.SessionHolder;
 
 /**
  *
  * @author fahmy
  */
-@WebServlet(urlPatterns = {"/signUp"})
-public class signUp extends HttpServlet {
+@WebServlet(urlPatterns = {"/updateUser"})
+public class updateUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,28 +39,14 @@ public class signUp extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // response.setContentType("text/html;charset=UTF-8");
-
-        User newUser = new User();
-        newUser.name = request.getParameter("userName");
-        newUser.email = request.getParameter("userEmail");
-        newUser.password = request.getParameter("userPassword");
-
-        Connection con = new DBConnection().getConnection();
-        Statement stmt;
-        try {
-            stmt = con.createStatement();
-            String insert = "insert into user (name, email, password, is_admin) VALUES('" +
-                  newUser.name+"','"+ newUser.email+"','"+newUser.password+"',false);";
-            stmt.executeUpdate(insert);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        response.setContentType("text/html;charset=UTF-8");
         
-
-        response.sendRedirect("homepage.html");
+        String name = request.getParameter("newName");
+        String password = request.getParameter("newPassword");
+                
+        HttpSession session = request.getSession(true);
+        User u = (User)session.getAttribute("user");
+        u.update(name , password);
 
     }
 
@@ -76,7 +63,6 @@ public class signUp extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**

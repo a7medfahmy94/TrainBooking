@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 
-import BusinessModels.User;
 import BusinessModels.DBConnection;
+import BusinessModels.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -24,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author fahmy
  */
-@WebServlet(urlPatterns = {"/signUp"})
-public class signUp extends HttpServlet {
+@WebServlet(urlPatterns = {"/signIn"})
+public class signIn extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,29 +39,36 @@ public class signUp extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // response.setContentType("text/html;charset=UTF-8");
-
+        response.setContentType("text/html;charset=UTF-8");
         User newUser = new User();
-        newUser.name = request.getParameter("userName");
-        newUser.email = request.getParameter("userEmail");
-        newUser.password = request.getParameter("userPassword");
-
+        newUser.email = request.getParameter("Email");
+        newUser.password = request.getParameter("Password");
         Connection con = new DBConnection().getConnection();
+        ResultSet res;
         Statement stmt;
         try {
             stmt = con.createStatement();
-            String insert = "insert into user (name, email, password, is_admin) VALUES('" +
-                  newUser.name+"','"+ newUser.email+"','"+newUser.password+"',false);";
-            stmt.executeUpdate(insert);
+            String query = "select * from user where password = '"+ newUser.password+"' and email='"+ newUser.email+"'";
+            res = stmt.executeQuery(query);
+            System.out.println(query);
+            if(!res.next()){
+                response.sendRedirect("sign_in.html");
+            }else{
+                HttpSession session = request.getSession(true);
+                if (!session.isNew()) {
+                    session.invalidate();
+                    session = request.getSession(true);
+                 }
+                newUser.name = res.getString("name");
+                newUser.id = res.getInt("id");
+                session.setAttribute("user", newUser);
+                response.sendRedirect("homepage.html");
+            }
+            
 
         } catch (SQLException ex) {
             Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-
-        response.sendRedirect("homepage.html");
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -76,7 +84,6 @@ public class signUp extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**

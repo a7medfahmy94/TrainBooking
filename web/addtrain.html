@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>add train</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <head>
+        <title>Train booking</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bootstrap.min.css" />
+        <script type="text/javascript">
+          function validate(form) {
+            var train = {
+              name: form.trainName.value,
+              capacity: form.trainCapacity.value,
+            }
+            if (!train.name) {
+              alert("Train name is required!");
+              return false;
+            }
+            if (!train.capacity) {
+              alert("Train capacity is required!");
+              return false;
+            }
+           
+            return true;
+          }
+        </script>
+    </head>
+    <body>
+        <form  method="post" action="addTrain" onsubmit="return validate(this);">
+            name: <input type="text" name="trainName">
+            <br>
+            capacity: <input type="text" name="trainCapacity">
+            <br>
+            <input type="submit" value="save">
+        </form>
+    </body>
+</html>
