@@ -38,30 +38,13 @@ public class updateUser extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        User newUser = new User();
-        newUser.name = request.getParameter("newName");
-        newUser.password = request.getParameter("newPassword");
-
+        
+        String name = request.getParameter("newName");
+        String password = request.getParameter("newPassword");
+                
         HttpSession session = request.getSession(true);
         User u = (User)session.getAttribute("user");
-        newUser.email = u.email;
-        Connection con = new DBConnection().getConnection();
-        Statement stmt;
-        try {
-            stmt = con.createStatement();
-            String update = "";
-            if (newUser.name == null && newUser.password != null){
-                 update = "update user set password='"+newUser.password+"' where email='" + newUser.email + "'";  
-            }else if(newUser.name != null && newUser.password == null){
-                 update = "update user set name='"+newUser.name+"' where email='" + newUser.email + "'";
-            }else if(newUser.name != null && newUser.password != null){
-                 update = "update user set name = '" +newUser.name+ "' and password='"+
-                        newUser.password+"' where email='" + newUser.email + "'";
-             }
-        stmt.executeUpdate(update);
-        } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        u.update(name , password);
 
     }
 

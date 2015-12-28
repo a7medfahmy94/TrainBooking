@@ -57,6 +57,8 @@ public class signIn extends HttpServlet {
                     session.invalidate();
                     session = request.getSession(true);
                  }
+                newUser.name = res.getString("name");
+                newUser.id = res.getInt("id");
                 session.setAttribute("user", newUser);
                 response.sendRedirect("homepage.html");
             }
