@@ -45,7 +45,6 @@
                   
                   for(int i = 0 ; i < trips.size() ; i++){
                    ArrayList<String>view = new ArrayList<String>();
-
                    view.add(trips.get(i).id.toString());
                    view.add(trips.get(i).position);
                    view.add(trips.get(i).destination);
@@ -53,6 +52,7 @@
                    view.add(trips.get(i).datetime);
                    view.add(trips.get(i).price.toString());
                    view.add(trips.get(i).train_id.toString());
+                   Boolean flag = false;
                    
                    for(int j = 0; j < view.size() ; j++){
                        
@@ -64,15 +64,28 @@
               %>
                </td>
                   <td>
+                 
+
+                  
+
                 <%
                    for(int k = 0; k < userTrips.size() ; k++)
-                   if(userTrips.get(k).id == trips.get(i).id){    
+                   if(userTrips.get(k).id == trips.get(i).id){ 
+                       flag = true;
+                   }   
                 %>
-                <button class="btn btn-default">unBook</button>
-              <%}else{
+               
+                <%if(flag == true){%>
+                <input type="submit" value="unbook" class="btn btn-default">
+                <%}else{
               %>
-             <button class="btn btn-default">book</button>
+                <form action="bookTrip">
+                  <input type="hidden" name="userId" value="2">
+                  <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
+                
+                <input type="submit" value="book" class="btn btn-default">
              <%}%>
+                  </form>
                  </td>
                 </tr>
 

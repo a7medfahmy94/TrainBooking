@@ -46,6 +46,19 @@ public class Trip {
         
     }
     
+    public void book(String userId, String tripId){
+         Connection con = new DBConnection().getConnection();
+        Statement stmt;
+        try {
+            stmt = con.createStatement();
+            String insert = "insert into booked (trip_id,user_id) VALUES('" +
+                  userId+"','"+ tripId+"');";
+            stmt.executeUpdate(insert);
+
+        } catch (SQLException ex) {
+        }
+    }
+    
     static public ArrayList<Trip> getAllTrips() {
         Connection con = new DBConnection().getConnection();
         String q = "select * from trip;";
@@ -70,7 +83,6 @@ public class Trip {
             Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ArrayList<Trip>();
-
     }
     
     static public ArrayList<Trip> getUserTrips(String userId) {
