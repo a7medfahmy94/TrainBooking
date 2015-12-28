@@ -66,6 +66,24 @@ public class Trip {
         }
     }
     
+    public void unbook(String userId, String tripId){
+         Connection con = new DBConnection().getConnection();
+        Statement stmt;
+        
+        System.out.println("******************");
+        System.out.println(userId);
+        System.out.println(tripId);
+        System.out.println("******************");
+
+        
+        try {
+            stmt = con.createStatement();
+            String insert = "delete from booked where trip_id=" + tripId +  " and user_id=" + userId + ";";
+            stmt.executeUpdate(insert);
+        } catch (SQLException ex) {
+        }
+    }
+    
     static public ArrayList<Trip> getAllTrips() {
         Connection con = new DBConnection().getConnection();
         String q = "select * from trip;";

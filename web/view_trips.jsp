@@ -76,7 +76,12 @@
                 %>
                
                 <%if(flag == true){%>
+                  <form action="unbookTrip">
+                  <input type="hidden" name="userId" value="2">
+                  <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
+               
                 <input type="submit" value="unbook" class="btn btn-default">
+                  </form>
                 <%}else{
               %>
                 <form action="bookTrip">
@@ -84,8 +89,8 @@
                   <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
                 
                 <input type="submit" value="book" class="btn btn-default">
+               </form>
              <%}%>
-                  </form>
                  </td>
                 </tr>
 
