@@ -43,12 +43,6 @@ public class bookTrip extends HttpServlet {
         
         Trip t = new Trip();
         
-        System.out.println("******************");
-        System.out.println(userId);
-        System.out.println(tripId);
-        System.out.println("******************");
-
-        
         t.book(userId , tripId);
     }
 

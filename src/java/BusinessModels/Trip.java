@@ -49,10 +49,17 @@ public class Trip {
     public void book(String userId, String tripId){
          Connection con = new DBConnection().getConnection();
         Statement stmt;
+        
+        System.out.println("******************");
+        System.out.println(userId);
+        System.out.println(tripId);
+        System.out.println("******************");
+
+        
         try {
             stmt = con.createStatement();
             String insert = "insert into booked (trip_id,user_id) VALUES('" +
-                  userId+"','"+ tripId+"');";
+                  tripId+"','"+ userId+"');";
             stmt.executeUpdate(insert);
 
         } catch (SQLException ex) {
