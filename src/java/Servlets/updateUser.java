@@ -1,10 +1,13 @@
+package Servlets;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import BusinessModels.User;
+import BusinessModels.DBConnection;
 
-import BusinessModels.Train;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -17,13 +20,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.jboss.weld.servlet.SessionHolder;
 
 /**
  *
- * @author hala
+ * @author fahmy
  */
-@WebServlet(urlPatterns = {"/addTrain"})
-public class addTrain extends HttpServlet {
+@WebServlet(urlPatterns = {"/updateUser"})
+public class updateUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +42,14 @@ public class addTrain extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Train train = new Train();
-        train.name = request.getParameter("trainName");
-        train.capacity = Integer.valueOf(request.getParameter("trainCapacity"));
-        train.save();
+        
+        String name = request.getParameter("newName");
+        String password = request.getParameter("newPassword");
+                
+        HttpSession session = request.getSession(true);
+        User u = (User)session.getAttribute("user");
+        u.update(name , password);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

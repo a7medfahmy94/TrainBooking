@@ -1,3 +1,5 @@
+package Servlets;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,8 +7,10 @@
  */
 
 import BusinessModels.Train;
+import BusinessModels.Trip;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,10 +37,18 @@ public class addTrip extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession session = request.getSession(true);
-        session.setAttribute("trains", Train.getAllTrains());
+        String strPrice = request.getParameter("tripPrice");
+        if (strPrice == null || strPrice.length() == 0) strPrice = "0";
         
-        response.sendRedirect("new_trip.jsp");
+        Trip trip = new Trip();
+        trip.position = request.getParameter("tripPosition");
+        trip.destination = request.getParameter("tripDestination");
+        trip.price = Integer.valueOf(strPrice);
+        trip.train_id = Integer.valueOf(request.getParameter("tripTrainId"));
+        trip.note = request.getParameter("tripNote");
+        trip.datetime = request.getParameter("tripDate") + " " + request.getParameter("tripTime");
+        
+        trip.save();
         
     }
 
