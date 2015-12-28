@@ -1,3 +1,5 @@
+package businessModels;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -54,7 +56,6 @@ public class Train {
             stmt.executeUpdate(insert);
 
         } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void update(Integer id,String name,Integer capacity){
@@ -80,7 +81,6 @@ public class Train {
             stmt.executeUpdate(update);
             con.close();
         } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
