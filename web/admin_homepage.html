@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>home page</title>
+        <title>Admin homepage</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap.min.css" />
@@ -15,18 +15,12 @@ and open the template in the editor.
 
          <script type="text/javascript">
                $("document").ready(function() {
-            $('#adminHeader').load('admin_header.html');
+            $('#container').load('admin_header.html');
         });
         </script>  
     </head>
     <body>
-       <div id="adminHeader"></div>
- 
-        <a href="addtrain.html">add train</a>
-        <br>
-        <a href="updatetrain.jsp">update train</a>
-        <br>
-        <a href="new_trip.jsp">add new trip</a>
-
+        <div id="container"></div>
+      <a href="addTrip">add new trip</a>
     </body>
 </html>

@@ -9,8 +9,19 @@ and open the template in the editor.
         <title>home page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <link rel="stylesheet" href="bootstrap.min.css" />
+        <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="bootstrap.min.js"></script>
+
+          <script type="text/javascript">
+               $("document").ready(function() {
+            $('#userHeader').load('user_header.html');
+        });
+        </script> 
+        
     </head>
     <body>
+         <div id="userHeader"></div>
          <a href="update_user.html">update user info</a>
     </body>
 </html>

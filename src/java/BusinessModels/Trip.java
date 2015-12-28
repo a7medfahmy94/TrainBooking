@@ -43,9 +43,47 @@ public class Trip {
         
     }
     
+    public void book(String userId, String tripId){
+         Connection con = new DBConnection().getConnection();
+        Statement stmt;
+        
+        System.out.println("******************");
+        System.out.println(userId);
+        System.out.println(tripId);
+        System.out.println("******************");
+
+        
+        try {
+            stmt = con.createStatement();
+            String insert = "insert into booked (trip_id,user_id) VALUES('" +
+                  tripId+"','"+ userId+"');";
+            stmt.executeUpdate(insert);
+
+        } catch (SQLException ex) {
+        }
+    }
+    
+    public void unbook(String userId, String tripId){
+         Connection con = new DBConnection().getConnection();
+        Statement stmt;
+        
+        System.out.println("******************");
+        System.out.println(userId);
+        System.out.println(tripId);
+        System.out.println("******************");
+
+        
+        try {
+            stmt = con.createStatement();
+            String insert = "delete from booked where trip_id=" + tripId +  " and user_id=" + userId + ";";
+            stmt.executeUpdate(insert);
+        } catch (SQLException ex) {
+        }
+    }
+    
     static public ArrayList<Trip> getAllTrips() {
         Connection con = new DBConnection().getConnection();
-        String q = "select * from train;";
+        String q = "select * from trip;";
         ResultSet res;
         try {
             Statement stmt = con.createStatement();
@@ -59,7 +97,7 @@ public class Trip {
                 t.destination = res.getString("destination");
                 t.note = res.getString("note");
                 t.price = res.getInt("price");
-                t.datetime = res.getDate("date").toString();
+                t.datetime = res.getDate("datetime").toString();
                 ret.add(t);
             }
             return ret;
@@ -67,6 +105,33 @@ public class Trip {
             Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ArrayList<Trip>();
+    }
+    
+    static public ArrayList<Trip> getUserTrips(String userId) {
+        Connection con = new DBConnection().getConnection();
+        String q = "select * from trip left join booked on trip.id=booked.trip_id where " + userId + "=booked.user_id;" ;
 
+        ResultSet res;
+        try {
+            Statement stmt = con.createStatement();
+            res = stmt.executeQuery(q);
+            ArrayList<Trip> ret = new ArrayList<Trip>();
+            while(res.next()) {
+                Trip t = new Trip();
+                t.id = res.getInt("id");
+                t.train_id = res.getInt("train_id");
+                t.position = res.getString("position");
+                t.destination = res.getString("destination");
+                t.note = res.getString("note");
+                t.price = res.getInt("price");
+                t.datetime = res.getDate("datetime").toString();
+                ret.add(t);
+            }
+            return ret;
+        } catch (SQLException ex) {
+            Logger.getLogger(Train.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+      return new ArrayList<Trip>();
     }
 }
