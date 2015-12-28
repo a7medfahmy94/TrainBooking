@@ -14,7 +14,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="bootstrap.min.css" />
-  
+        <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="bootstrap.min.js"></script>
+
+         <script type="text/javascript">
+               $("document").ready(function() {
+            $('#userHeader').load('user_header.html');
+        });
+        </script> 
+        
+    <div id="userHeader"></div>
     <h1>Trips</h1>
     </head>
     <body>
@@ -41,7 +50,7 @@
 
 
                   trips = Trip.getAllTrips();
-                  userTrips = Trip.getUserTrips("2"); //u.id.toString()
+                  userTrips = Trip.getUserTrips(u.id.toString());
                   
                   for(int i = 0 ; i < trips.size() ; i++){
                    ArrayList<String>view = new ArrayList<String>();
@@ -77,7 +86,7 @@
                
                 <%if(flag == true){%>
                   <form action="unbookTrip">
-                  <input type="hidden" name="userId" value="2">
+                  <input type="hidden" name="userId" value="<%=u.id.toString()%>">
                   <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
                
                 <input type="submit" value="unbook" class="btn btn-default">
@@ -85,7 +94,7 @@
                 <%}else{
               %>
                 <form action="bookTrip">
-                  <input type="hidden" name="userId" value="2">
+                  <input type="hidden" name="userId" value="<%=u.id.toString()%>">
                   <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
                 
                 <input type="submit" value="book" class="btn btn-default">
