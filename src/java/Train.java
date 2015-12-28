@@ -44,4 +44,43 @@ public class Train {
         
         return new ArrayList<Train>();
     }
+    public void save(){
+        Connection con = new DBConnection().getConnection();
+        Statement stmt;
+        try {
+            stmt = con.createStatement();
+            String insert = "insert into train (name,capacity) VALUES('" +
+                  this.name+"','"+this.capacity+"');";
+            stmt.executeUpdate(insert);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void update(Integer id,String name,Integer capacity){
+        Connection con = new DBConnection().getConnection();
+        Statement stmt;
+        String update = "update train set ";
+        boolean iName=false , iCap=false;
+        if(name != null && name.length() > 0){
+            update += "name='"+name+"' ";
+            iName=true;
+        }
+        if (capacity != null) {
+            if(iName) update += ", ";
+            update += "capacity=" + capacity;
+            iCap = true;
+        }
+        if(!iName && !iCap) return;//no update
+        
+        update += " where id=" + id;
+        System.out.println(update);
+        try {
+            stmt = con.createStatement();
+            stmt.executeUpdate(update);
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

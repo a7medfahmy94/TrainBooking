@@ -39,17 +39,7 @@ public class addTrain extends HttpServlet {
         Train train = new Train();
         train.name = request.getParameter("trainName");
         train.capacity = Integer.valueOf(request.getParameter("trainCapacity"));
-        Connection con = new DBConnection().getConnection();
-        Statement stmt;
-        try {
-            stmt = con.createStatement();
-            String insert = "insert into train (name,capacity) VALUES('" +
-                  train.name+"','"+train.capacity+"');";
-            stmt.executeUpdate(insert);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        train.save();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

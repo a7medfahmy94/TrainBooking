@@ -37,28 +37,11 @@ public class updateTrain extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Train train = new Train();
-        train.name = request.getParameter("newName");
-        train.capacity = Integer.valueOf(request.getParameter("newCapacity"));
+        String name = request.getParameter("newName");
+        Integer capacity = Integer.valueOf(request.getParameter("newCapacity"));
+        Integer id = Integer.valueOf(request.getParameter("id"));
 
-        HttpSession session = request.getSession(true);
-        Connection con = new DBConnection().getConnection();
-        Statement stmt;
-        try {
-            stmt = con.createStatement();
-            String update = "";
-            if (train.name == null && train.capacity != null){
-            
-            }else if(train.name != null && train.capacity == null){
-            
-            }else if(train.name != null && train.capacity != null){
-                 
-             }
-           
-        stmt.executeUpdate(update);
-        } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Train.update(id,name,capacity);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
