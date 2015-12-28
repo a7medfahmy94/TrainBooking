@@ -48,7 +48,7 @@ public class Trip {
     
     static public ArrayList<Trip> getAllTrips() {
         Connection con = new DBConnection().getConnection();
-        String q = "select * from train;";
+        String q = "select * from trip;";
         ResultSet res;
         try {
             Statement stmt = con.createStatement();
@@ -62,7 +62,7 @@ public class Trip {
                 t.destination = res.getString("destination");
                 t.note = res.getString("note");
                 t.price = res.getInt("price");
-                t.datetime = res.getDate("date").toString();
+                t.datetime = res.getDate("datetime").toString();
                 ret.add(t);
             }
             return ret;
