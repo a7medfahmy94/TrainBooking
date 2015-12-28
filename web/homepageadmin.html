@@ -9,10 +9,24 @@ and open the template in the editor.
         <title>home page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bootstrap.min.css" />
+        <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="bootstrap.min.js"></script>
+
+         <script type="text/javascript">
+               $("document").ready(function() {
+            $('#adminHeader').load('admin_header.html');
+        });
+        </script>  
     </head>
     <body>
+       <div id="adminHeader"></div>
+ 
         <a href="addtrain.html">add train</a>
         <br>
-        <a href="updatetrain.html">update train</a>
+        <a href="updatetrain.jsp">update train</a>
+        <br>
+        <a href="new_trip.jsp">add new trip</a>
+
     </body>
 </html>

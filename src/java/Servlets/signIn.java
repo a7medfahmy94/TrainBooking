@@ -41,36 +41,24 @@ public class signIn extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        User newUser = new User();
-        newUser.email = request.getParameter("Email");
-        newUser.password = request.getParameter("Password");
-        Connection con = new DBConnection().getConnection();
-        ResultSet res;
-        Statement stmt;
-        try {
-            stmt = con.createStatement();
-            String query = "select * from user where password = '"+ newUser.password+"' and email='"+ newUser.email+"'";
-            res = stmt.executeQuery(query);
-            System.out.println(query);
-            if(!res.next()){
-                response.sendRedirect("sign_in.html");
-            }else{
-                HttpSession session = request.getSession(true);
-                if (!session.isNew()) {
-                    session.invalidate();
-                    session = request.getSession(true);
-                 }
-                newUser.name = res.getString("name");
-                newUser.id = res.getInt("id");
-                session.setAttribute("user", newUser);
+        
+        User u = User.signIn(request.getParameter("Email"),request.getParameter("Password"));
+        if (u == null) {
+            response.sendRedirect("sign_in.html");
+        } else {
+            HttpSession session = request.getSession(true);
+            if (!session.isNew()) {
+                session.invalidate();
+                session = request.getSession(true);
+            }
+            session.setAttribute("user", u);
+            if (u.is_admin) {
+                response.sendRedirect("homepageadmin.html");
+            } else {
                 response.sendRedirect("homepage.html");
             }
-            
-
-        } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

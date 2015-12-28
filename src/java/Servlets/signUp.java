@@ -46,18 +46,9 @@ public class signUp extends HttpServlet {
         newUser.name = request.getParameter("userName");
         newUser.email = request.getParameter("userEmail");
         newUser.password = request.getParameter("userPassword");
-
-        Connection con = new DBConnection().getConnection();
-        Statement stmt;
-        try {
-            stmt = con.createStatement();
-            String insert = "insert into user (name, email, password, is_admin) VALUES('" +
-                  newUser.name+"','"+ newUser.email+"','"+newUser.password+"',false);";
-            stmt.executeUpdate(insert);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(signUp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        newUser.is_admin = false;
+        
+        newUser.save();
 
         
 
