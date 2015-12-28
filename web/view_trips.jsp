@@ -4,6 +4,7 @@
     Author     : amr
 --%>
 
+<%@page import="BusinessModels.User"%>
 <%@page import="BusinessModels.Train"%>
 <%@page import="java.util.*"%>
 <%@page import="BusinessModels.Trip"%>
@@ -13,7 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="bootstrap.min.css" />
-        
+  
     <h1>Trips</h1>
     </head>
     <body>
@@ -27,17 +28,24 @@
                   <th>date</th>
                   <th>price</th>
                   <th>Train Num</th>
+                  <th>Actions</th>
                 </tr>
             </thead>
-                          <tr>
-
             <tbody>
+            <tr>
                <%
+                  User u = (User)session.getAttribute("user");
+                  
                   ArrayList<Trip> trips = new ArrayList<Trip>();
+                  ArrayList<Trip> userTrips = new ArrayList<Trip>();
+
+
                   trips = Trip.getAllTrips();
-                   
+                  userTrips = Trip.getUserTrips("2"); //u.id.toString()
+                  
                   for(int i = 0 ; i < trips.size() ; i++){
                    ArrayList<String>view = new ArrayList<String>();
+
                    view.add(trips.get(i).id.toString());
                    view.add(trips.get(i).position);
                    view.add(trips.get(i).destination);
@@ -54,11 +62,25 @@
                   out.println(view.get(j));
                    }
               %>
-              </td>
-              </tr>
-              <%        }%>
+               </td>
+                  <td>
+                <%
+                   for(int k = 0; k < userTrips.size() ; k++)
+                   if(userTrips.get(k).id == trips.get(i).id){    
+                %>
+                <button class="btn btn-default">unBook</button>
+              <%}else{
+              %>
+             <button class="btn btn-default">book</button>
+             <%}%>
+                 </td>
+                </tr>
+
+             <%}%>
             </tbody>
         </table>
 
     </body>
 </html>
+
+              
