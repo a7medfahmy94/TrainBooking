@@ -36,19 +36,15 @@
         <div id="adminHeader"></div> 
 
         <% ArrayList<Train> allTrains = Train.getAllTrains(); %>
-        <form action="updateTrain">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                  Train
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <% for(Train t : allTrains) { %>
-                          <li onclick="setTrain('<%=t.name%>',<%=t.id%>,<%=t.capacity%>);"><%= t.name %></li>
-                    <% } %>
-                </ul>
+        
+        <form action="updateTrain" class="col-md-6">
+            <div class="form-group">
+            <select class="form-control"> 
+            <% for(Train t : allTrains) { %>
+                <option onclick="setTrain('<%=t.name%>',<%=t.id%>,<%=t.capacity%>);"><%= t.name %></option>
+            <% } %>
+            </select>
             </div>
-
             new name: <input id="trainName" type="text" name="newName">
             <br>
             new capacity: <input id="trainCap" type="number" name="newCapacity">
@@ -56,10 +52,6 @@
             <input type="number" id="trainId" value="1" name="id" hidden>
             <input type="submit" value="update">
         </form>
-        <a href="homepageadmin.html"><button>Home</button></a>
-<!--        <form action="homepageadmin.html">
-            <input type="submit" value="back">
-        </form>-->
 
     </body>
 </html>
