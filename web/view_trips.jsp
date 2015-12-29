@@ -19,9 +19,36 @@
 
         <script type="text/javascript">
                $("document").ready(function() {
-            $('#userHeader').load('user_header.html');
-        });
+                    $('#userHeader').load('user_header.html');                    
+               });
         </script> 
+        <script>
+            function book(form) {
+                   $.ajax({
+                       url: 'bookTrip',
+                       data: {
+                           userId: form.userId.value,
+                           tripId: form.tripId.value
+                       },
+                       method: 'POST'
+                   }).then(function(data){
+                       location.reload(true);
+                   });
+               }
+                function unbook(form) {
+                   $.ajax({
+                       url: 'unbookTrip',
+                       data: {
+                           userId: form.userId.value,
+                           tripId: form.tripId.value
+                       },
+                       method: 'POST'
+                   }).then(function(data){
+                        location.reload(true);
+                   });
+               }
+
+        </script>
         
     <div id="userHeader"></div>
     <h1>Trips</h1>
@@ -83,23 +110,21 @@
                        flag = true;
                    }   
                 %>
-               
-                <%if(flag == true){%>
-                  <form action="unbookTrip">
+               <% if (flag) { %>
+                <form action="#" onsubmit="return unbook(this);" id="unbookForm">
                   <input type="hidden" name="userId" value="<%=u.id.toString()%>">
                   <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
                
-                <input type="submit" value="unbook" class="btn btn-default">
-                  </form>
-                <%}else{
-              %>
-                <form action="bookTrip">
-                  <input type="hidden" name="userId" value="<%=u.id.toString()%>">
-                  <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
-                
-                <input type="submit" value="book" class="btn btn-default">
-               </form>
-             <%}%>
+                    <input type="submit" value="unbook" class="btn btn-default">
+                </form>
+                  <% } else { %>
+                <form id="bookForm" action="#" onsubmit="return book(this);">
+                    <input type="hidden" name="userId" value="<%=u.id.toString()%>">
+                    <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
+
+                  <input type="submit" value="book" class="btn btn-default">
+                 </form>
+                  <% } %>
                  </td>
                 </tr>
 

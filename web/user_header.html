@@ -4,15 +4,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="bootstrap.min.js"></script>
         <link rel="stylesheet" href="bootstrap.min.css" />
-
+        <script>
+            function help() {
+                alert("Heeeeeeelp");
+            }
+        </script>
     </head>
    <body>
         <h1>Train Booking TB</h1>
         <div class="row">
-            <button class="btn btn-default">Home</button>
+            <a href="homepage.html"><button class="btn btn-default">Home</button></a>
             <a class="btn btn-default" href="view_user_trips.jsp">My trips</a>
             <a class="btn btn-default" href="view_trips.jsp">Avaliable trips</a>
-            <button class="btn btn-default" >Help</button>
+            <button class="btn btn-default" onclick="help();">Help</button>
         </div>
    </body>
 </html>
