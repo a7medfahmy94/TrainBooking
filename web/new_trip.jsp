@@ -29,8 +29,15 @@
                 return true;
             }
         </script>
+        <script type="text/javascript">
+        $("document").ready(function() {
+            $('#adminHeader').load('admin_header.html');
+        });
+        </script>  
+
     </head>
     <body>
+        <div id="adminHeader"></div> 
         <form action="addTrip" onsubmit="return validate(this);" class="col-md-6 form">           
             <select name="tripTrainId" class="form-control">
                 <% for(Train t : allTrains) { %>

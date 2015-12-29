@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
         <title>add train</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,8 +33,15 @@ and open the template in the editor.
             return true;
           }
         </script>
+        <script type="text/javascript">
+        $("document").ready(function() {
+            $('#adminHeader').load('admin_header.html');
+        });
+        </script>  
+
     </head>
     <body>
+        <div id="adminHeader"></div> 
         <form  method="post" action="addTrain" onsubmit="return validate(this);">
             name: <input type="text" name="trainName">
             <br>

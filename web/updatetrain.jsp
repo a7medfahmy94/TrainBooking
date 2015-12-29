@@ -25,8 +25,16 @@
             console.log(cap);
         }
         </script>
+        <script type="text/javascript">
+        $("document").ready(function() {
+            $('#adminHeader').load('admin_header.html');
+        });
+        </script>  
+
     </head>
     <body>
+        <div id="adminHeader"></div> 
+
         <% ArrayList<Train> allTrains = Train.getAllTrains(); %>
         <form action="updateTrain">
             <div class="dropdown">
