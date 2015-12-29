@@ -1,9 +1,9 @@
-<%-- 
-    Document   : view_trips
-    Created on : Dec 28, 2015, 8:51:50 PM
-    Author     : amr
---%>
-
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <%@page import="BusinessModels.User"%>
 <%@page import="BusinessModels.Train"%>
 <%@page import="java.util.*"%>
@@ -11,23 +11,26 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap.min.css" />
         <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="bootstrap.min.js"></script>
-
-        <script type="text/javascript">
+           <script type="text/javascript">
                $("document").ready(function() {
             $('#userHeader').load('user_header.html');
         });
         </script> 
         
-    <div id="userHeader"></div>
-    <h1>Trips</h1>
+        <div id="userHeader"></div>
+        <h2>User Trips</h2>
     </head>
     <body>
-        <table class="table"> 
+        <div>
+            <table class="table"> 
             <thead>
                 <tr>
                   <th>Id</th>
@@ -46,11 +49,8 @@
                   User u = (User)session.getAttribute("user");
                   
                   ArrayList<Trip> trips = new ArrayList<Trip>();
-                  ArrayList<Trip> userTrips = new ArrayList<Trip>();
-
-
-                  trips = Trip.getAllTrips();
-                  userTrips = Trip.getUserTrips(u.id.toString());
+                  trips = Trip.getUserTrips(u.id.toString());
+                  float totalCost = 0;
                   
                   for(int i = 0 ; i < trips.size() ; i++){
                    ArrayList<String>view = new ArrayList<String>();
@@ -61,53 +61,24 @@
                    view.add(trips.get(i).datetime);
                    view.add(trips.get(i).price.toString());
                    view.add(trips.get(i).train_id.toString());
-                   Boolean flag = false;
+                   
+                   totalCost +=  trips.get(i).price;
                    
                    for(int j = 0; j < view.size() ; j++){
                        
               %>
-              <td>
-              <%
-                  out.println(view.get(j));
-                   }
-              %>
-               </td>
-                  <td>
-                 
-
-                  
-
+                <td>
                 <%
-                   for(int k = 0; k < userTrips.size() ; k++)
-                   if(userTrips.get(k).id == trips.get(i).id){ 
-                       flag = true;
-                   }   
+                    out.println(view.get(j));
+                     }
                 %>
-               
-                <%if(flag == true){%>
-                  <form action="unbookTrip">
-                  <input type="hidden" name="userId" value="<%=u.id.toString()%>">
-                  <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
-               
-                <input type="submit" value="unbook" class="btn btn-default">
-                  </form>
-                <%}else{
-              %>
-                <form action="bookTrip">
-                  <input type="hidden" name="userId" value="<%=u.id.toString()%>">
-                  <input type="hidden" name="tripId" value="<%=trips.get(i).id%>">
-                
-                <input type="submit" value="book" class="btn btn-default">
-               </form>
-             <%}%>
                  </td>
-                </tr>
-
-             <%}%>
+              </tr>
+               <%}%>
             </tbody>
-        </table>
-
+           </table>
+            
+               <h1>Total price = <%=totalCost%></h1>
+        </div>
     </body>
 </html>
-
-              
